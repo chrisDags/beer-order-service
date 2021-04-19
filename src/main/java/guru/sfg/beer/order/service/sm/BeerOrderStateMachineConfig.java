@@ -28,7 +28,11 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
     @Override
     public void configure(StateMachineTransitionConfigurer<BeerOrderStatusEnum, BeerOrderEventEnum> transitions) throws Exception {
         transitions.withExternal()
-                    .source(BeerOrderStatusEnum.NEW).target(BeerOrderStatusEnum.NEW)
+                    /*
+                        when we get a validate order event through the system VIA the state machine, we want to move it
+                        from NEW to VALIDATION_PENDING to state
+                     */
+                    .source(BeerOrderStatusEnum.NEW).target(BeerOrderStatusEnum.VALIDATION_PENDING)
                     .event(BeerOrderEventEnum.VALIDATE_ORDER)
                     //TODO: ADD VALIDATION ACTION HERE
                 .and().withExternal()
