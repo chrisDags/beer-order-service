@@ -1,5 +1,6 @@
 package guru.sfg.beer.order.service.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
@@ -17,10 +18,11 @@ public class JmsConfig {
 
 
     @Bean // Serialize message content to json
-    public MessageConverter jacksonJmsMessageConverter(){
+    public MessageConverter jacksonJmsMessageConverter(ObjectMapper objectMapper){
         MappingJackson2MessageConverter mappingJackson2MessageConverter = new MappingJackson2MessageConverter();
         mappingJackson2MessageConverter.setTargetType(MessageType.TEXT);
         mappingJackson2MessageConverter.setTypeIdPropertyName("_type");
+        mappingJackson2MessageConverter.setObjectMapper(objectMapper);
         return mappingJackson2MessageConverter;
     }
 }
