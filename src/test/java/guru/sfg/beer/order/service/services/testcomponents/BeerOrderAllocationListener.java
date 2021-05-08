@@ -32,7 +32,7 @@ public class BeerOrderAllocationListener {
         // set allocation failed
         if (allocateOrderRequest.getBeerOrderDto().getCustomerRef() != null && allocateOrderRequest.getBeerOrderDto().getCustomerRef().equals("fail-allocation")) {
             allocationError = true;
-        }else if(allocateOrderRequest.getBeerOrderDto().getCustomerRef() != null && allocateOrderRequest.getBeerOrderDto().getCustomerRef().equals("dont-allocate")){
+        } else if (allocateOrderRequest.getBeerOrderDto().getCustomerRef() != null && allocateOrderRequest.getBeerOrderDto().getCustomerRef().equals("dont-allocate")) {
             sendResponse = false;
         }
 
@@ -46,13 +46,13 @@ public class BeerOrderAllocationListener {
                     }
                 });
 
-       if(sendResponse){
-           jmsTemplate.convertAndSend(JmsConfig.ALLOCATE_ORDER_RESPONSE_QUEUE,
-                   AllocateOrderResult.builder()
-                           .beerOrderDto(allocateOrderRequest.getBeerOrderDto())
-                           .pendingInventory(pendingInventory)
-                           .allocationError(allocationError)
-                           .build());
-       }
+        if (sendResponse) {
+            jmsTemplate.convertAndSend(JmsConfig.ALLOCATE_ORDER_RESPONSE_QUEUE,
+                    AllocateOrderResult.builder()
+                            .beerOrderDto(allocateOrderRequest.getBeerOrderDto())
+                            .pendingInventory(pendingInventory)
+                            .allocationError(allocationError)
+                            .build());
+        }
     }
 }

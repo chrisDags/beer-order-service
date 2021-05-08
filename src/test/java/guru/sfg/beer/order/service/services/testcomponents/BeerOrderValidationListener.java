@@ -32,15 +32,15 @@ public class BeerOrderValidationListener {
         //condition to fail validation
 
 
-        if(validateOrderRequest.getBeerOrderDto().getCustomerRef() != null){
-            if(validateOrderRequest.getBeerOrderDto().getCustomerRef().equals("fail-validation")){
+        if (validateOrderRequest.getBeerOrderDto().getCustomerRef() != null) {
+            if (validateOrderRequest.getBeerOrderDto().getCustomerRef().equals("fail-validation")) {
                 isValid = false;
-            }else if( validateOrderRequest.getBeerOrderDto().getCustomerRef().equals("dont-validate")){
+            } else if (validateOrderRequest.getBeerOrderDto().getCustomerRef().equals("dont-validate")) {
                 sendResponse = false;
             }
         }
 
-        if(sendResponse){
+        if (sendResponse) {
             jmsTemplate.convertAndSend(JmsConfig.VALIDATE_ORDER_RESPONSE_QUEUE,
                     ValidateOrderResult.builder()
                             .isValid(isValid)

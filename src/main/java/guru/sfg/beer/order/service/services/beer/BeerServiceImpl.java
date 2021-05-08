@@ -19,8 +19,8 @@ public class BeerServiceImpl implements BeerService {
 
     private final RestTemplate restTemplate;
 
-    @Value("beer-service-host")
-    private String beerServiceHost;
+   // @Value("beer-service-host")
+    private String beerServiceHost = "http://localhost:8080";
 
     public BeerServiceImpl(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
@@ -28,16 +28,18 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public Optional<BeerDto> getBeerById(UUID uuid) {
+        System.out.println(beerServiceHost + BEER_PATH_V1 + uuid.toString());
         return Optional.of(restTemplate.getForObject(beerServiceHost + BEER_PATH_V1 + uuid.toString(), BeerDto.class));
     }
 
     @Override
     public Optional<BeerDto> getBeerByUpc(String upc) {
+        System.out.println(beerServiceHost + BEER_UPC_PATH_V1 + upc);
 
         return Optional.of(restTemplate.getForObject(beerServiceHost + BEER_UPC_PATH_V1 + upc, BeerDto.class));
     }
 
-    public void setBeerServiceHost(String beerServiceHost){
+    public void setBeerServiceHost(String beerServiceHost) {
         this.beerServiceHost = beerServiceHost;
     }
 }

@@ -55,9 +55,9 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
     @Override
     public void processValidationResult(UUID beerOrderId, Boolean isValid) {
 
-        log.debug("Is the process validation result for beerOrderId: " + beerOrderId +" valid?: " + isValid);
+        log.debug("Is the process validation result for beerOrderId: " + beerOrderId + " valid?: " + isValid);
 
-       // entityManager.flush();
+        // entityManager.flush();
 
         Optional<BeerOrder> beerOrderOptional = beerOrderRepository.findById(beerOrderId);
 
@@ -141,7 +141,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
     public void beerOrderPickedUp(UUID id) {
         Optional<BeerOrder> beerOrderOptional = beerOrderRepository.findById(id);
 
-        beerOrderOptional.ifPresentOrElse(beerOrder ->{
+        beerOrderOptional.ifPresentOrElse(beerOrder -> {
             //do process
             sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.BEERORDER_PICKED_UP);
         }, () -> log.error("Order Not Found. ID: " + id));
@@ -149,7 +149,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
 
     @Override
     public void cancelOrder(UUID id) {
-        beerOrderRepository.findById(id).ifPresentOrElse(beerOrder ->{
+        beerOrderRepository.findById(id).ifPresentOrElse(beerOrder -> {
             sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.CANCEL_ORDER);
         }, () -> log.error("Order Not Found. ID: " + id));
     }
@@ -184,6 +184,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
 
         return sm;
     }
+
     private void awaitForStatus(UUID beerOrderId, BeerOrderStatusEnum statusEnum) {
 
         AtomicBoolean found = new AtomicBoolean(false);
